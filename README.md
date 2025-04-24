@@ -1,78 +1,36 @@
-# Grading Tool
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A SvelteKit application for teachers to create and grade tests, and for students to take tests with automated code grading.
+## Getting Started
 
-## Features
+First, run the development server:
 
-- Authentication with Supabase (teacher vs student roles)
-- Teacher dashboard to create tests (multiple choice and coding)
-- Student dashboard to take tests with Monaco code editor
-- OpenAI-based code grading
-- Fastify backend for code evaluation
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## Setup
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-3. Create a `.env` file in the root directory with the following variables:
-   ```
-   VITE_SUPABASE_URL=your_supabase_url
-   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-   OPENAI_API_KEY=your_openai_api_key
-   ```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-4. Set up Supabase:
-   - Create a new project in Supabase
-   - Create a `users` table with the following schema:
-     ```sql
-     create table users (
-       id uuid references auth.users on delete cascade,
-       email text,
-       role text check (role in ('teacher', 'student')),
-       primary key (id)
-     );
-     ```
-   - Create a `tests` table with the following schema:
-     ```sql
-     create table tests (
-       id uuid default uuid_generate_v4() primary key,
-       teacher_id uuid references users(id) on delete cascade,
-       title text,
-       type text check (type in ('multiple_choice', 'coding')),
-       questions jsonb
-     );
-     ```
+## Learn More
 
-5. Start the development servers:
-   ```bash
-   # Terminal 1 - Frontend
-   npm run dev
+To learn more about Next.js, take a look at the following resources:
 
-   # Terminal 2 - Backend
-   node server.js
-   ```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Project Structure
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-- `src/routes/` - SvelteKit routes
-  - `+page.svelte` - Home page with authentication
-  - `teacher/+page.svelte` - Teacher dashboard
-  - `student/+page.svelte` - Student dashboard
-- `src/lib/` - Shared components and utilities
-  - `components/` - Reusable components
-  - `supabase.ts` - Supabase client configuration
-- `server.js` - Fastify backend server
+## Deploy on Vercel
 
-## Technologies Used
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-- SvelteKit
-- TypeScript
-- TailwindCSS
-- Supabase
-- Monaco Editor
-- Fastify
-- OpenAI API
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
